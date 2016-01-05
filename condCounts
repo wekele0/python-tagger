@@ -1,0 +1,24 @@
+""" Splits a sentence into substrings of length n """
+def getNGrams(sentence, n):
+	padsentence = ' '*(n-1) + sentence + ' '*(n-1)
+	NgramSeq = [padsentence[x:x+n] for x in range(0,len(padsentence)-n+1)]
+	return NgramSeq
+
+def getConditionalCounts(sentences, n):
+	conditionalCounts = {}
+	for sentence in sentences:
+		Ngramseq = getNGrams(sentence,n)
+		for entry in Ngramseq:
+			firstid = entry[0:-1]
+			secid = entry[-1]
+			if not firstid in conditionalCounts:
+				conditionalCounts[firstid] = {}
+			if not secid in conditionalCounts[firstid]:
+				conditionalCounts[firstid][secid] = 0
+			conditionalCounts[firstid][secid] += 1
+		print(Ngramseq)
+	print conditionalCounts
+
+        
+strtest = ['This Think Thimble Thin']
+getConditionalCounts(strtest,4)
